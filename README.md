@@ -24,12 +24,6 @@ command line tools</a> which can be installed with
 
     xcode-select --install
 
-Then click "Install". After you have installed the command line tools,
-if you are on Mojave, you will also need to install the macOS headers
-package with
-
-    sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
-
 ## Installation ##
 
 Installation is very simple.  After installing prerequisite tools, type the following in a terminal.
