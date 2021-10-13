@@ -786,11 +786,13 @@ BEGIN {
         printf "%s...%s\r",dir,file
     }
     $FLUSHCMD;next
+
 }
 /SelfCheck: Database status OK./ {
     filename()
     printf e"K%."tmax"s\r",$0
     $FLUSHCMD;next
+
 }
 /^==> / {
     if (pf) {
@@ -801,6 +803,7 @@ BEGIN {
         pf=1
     }
     $FLUSHCMD;next
+
 }
 !/^ *$/ {
     sub(/ERROR/,r"ERROR"n)
