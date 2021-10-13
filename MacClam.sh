@@ -30,8 +30,33 @@ popd > /dev/null
 # You can customize the following variables to suit your tastes.  If
 # you change them, run this script again to apply your settings.
 #
+# This script has been modified so that it checks the macOS version
+# and sets the script to use either fflush for macOS 10.XX, or uses
+# flush for macOS 11.xx and newer as fflush is being depreciated in
+# newer versions of macOS.
 
-#The  top level installation directory.  It must not contain spaces or the builds won't work.
+# Minimum macOS that has been tested to work with this script (10.13),
+# but any version of macOS 10.XX should work just fine. macOS 11 and 
+# newer is still being tested for bugs.
+MIN_OS_VERSION="10"
+
+# Set FLUSH to be either fflush or flush, depending on macOS version. It
+# is set to fflush by default as it seems only macOS 11+ require fflush,
+# but I am still looking into this a bit more.
+FLUSHCMD="fflush"
+
+# Check for the macOS version and save it to check_version and set FLUSH
+# to be either fflush for macOS 10.xx and older, and flush for macOS 11.xx
+# and newer.
+OS_VERSION="$(sw_vers | grep ProductVersion | sed 's/\([a-zA-Z: \t]\)//g' | cut -d '.' -f1)"
+if [ $OS_VERSION -ge $MIN_OS_VERSION ]
+then
+  FLUSHCMD="flush"
+else
+  FLUSHCMD="fflush"
+fi
+
+#The top level installation directory.  It must not contain spaces or the builds won't work.
 INSTALLDIR="$HOME/MacClam"
 
 # Directories to monitor
@@ -760,12 +785,12 @@ BEGIN {
         sub(/OK$/,g"OK"n,file)
         printf "%s...%s\r",dir,file
     }
-    flush;next
+    $FLUSHCMD;next
 }
 /SelfCheck: Database status OK./ {
     filename()
     printf e"K%."tmax"s\r",$0
-    flush;next
+    $FLUSHCMD;next
 }
 /^==> / {
     if (pf) {
@@ -775,7 +800,7 @@ BEGIN {
         printf c "%."tmax"s\n" n,f=$0
         pf=1
     }
-    flush;next
+    $FLUSHCMD;next
 }
 !/^ *$/ {
     sub(/ERROR/,r"ERROR"n)
