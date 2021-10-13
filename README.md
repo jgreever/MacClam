@@ -23,7 +23,7 @@ href="https://developer.apple.com/library/ios/technotes/tn2339/_index.html">Xcod
 command line tools</a> which can be installed with
 
     xcode-select --install
-    
+
 Then click "Install". After you have installed the command line tools,
 if you are on Mojave, you will also need to install the macOS headers
 package with
