@@ -49,7 +49,7 @@ FLUSHCMD="fflush"
 # to be either fflush for macOS 10.xx and older, and flush for macOS 11.xx
 # and newer.
 OS_VERSION="$(sw_vers | grep ProductVersion | sed 's/\([a-zA-Z: \t]\)//g' | cut -d '.' -f1)"
-if [ $OS_VERSION -ge $MIN_OS_VERSION ]
+if [ "$OS_VERSION" -ge "$MIN_OS_VERSION" ]
 then
   FLUSHCMD="flush"
 else
