@@ -52,9 +52,12 @@ OS_VERSION="$(sw_vers | grep ProductVersion | sed 's/\([a-zA-Z: \t]\)//g' | cut 
 if [ $OS_VERSION -ge $MIN_OS_VERSION ]
 then
   FLUSHCMD="flush"
-#else
-#  FLUSHCMD="fflush"
+else
+  FLUSHCMD="fflush"
 fi
+
+echo "macOS Version: "$OS_VERSION""
+echo "Flush Command Used: "$FLUSHCMD""
 
 #The top level installation directory.  It must not contain spaces or the builds won't work.
 INSTALLDIR="$HOME/MacClam"
